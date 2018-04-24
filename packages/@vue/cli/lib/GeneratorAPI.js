@@ -5,7 +5,7 @@ const globby = require('globby')
 const resolve = require('resolve')
 const isBinary = require('isbinaryfile')
 const yaml = require('yaml-front-matter')
-const mergeDeps = require('./util/mergeDeps')
+// const mergeDeps = require('./util/mergeDeps')
 const { getPluginLink, toShortPluginId } = require('@vue/cli-shared-utils')
 
 const isString = val => typeof val === 'string'
@@ -92,15 +92,16 @@ class GeneratorAPI {
     for (const key in toMerge) {
       const value = toMerge[key]
       const existing = pkg[key]
-      if (isObject(value) && (key === 'dependencies' || key === 'devDependencies')) {
-        // use special version resolution merge
-        pkg[key] = mergeDeps(
-          this.id,
-          existing || {},
-          value,
-          this.generator.depSources
-        )
-      } else if (!(key in pkg)) {
+      // if (isObject(value) && (key === 'dependencies' || key === 'devDependencies')) {
+      //   // use special version resolution merge
+      //   pkg[key] = mergeDeps(
+      //     this.id,
+      //     existing || {},
+      //     value,
+      //     this.generator.depSources
+      //   )
+      // } else if (!(key in pkg)) {
+      if (!(key in pkg)) {
         pkg[key] = value
       } else if (Array.isArray(value) && Array.isArray(existing)) {
         pkg[key] = existing.concat(value)
